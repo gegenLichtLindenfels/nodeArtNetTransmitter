@@ -1,0 +1,27 @@
+{
+  "name": "nodeArtNetTransmitter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "debug": "tsc && node --inspect server.js",
+    "build": "tsc",
+    "start": "tsc && node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gegenLichtLindenfels/nodeArtNetTransmitter.git"
+  },
+  "keywords": [],
+  "author": "gegenLicht ✨",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gegenLichtLindenfels/nodeArtNetTransmitter/issues"
+  },
+  "homepage": "https://github.com/gegenLichtLindenfels/nodeArtNetTransmitter#readme",
+  "dependencies": {
+    "@types/node": "^14.6.0",
+    "keypress": "^0.2.1",
+    "typescript": "^3.9.7"
+  }
+}
