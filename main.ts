@@ -9,6 +9,7 @@ const ArtNetPacket = [
     0,    0,   0,   3,   0,   0, 121,
     0
 ]
+console.log(ArtNetPacket)
 
 // It consits of >>>
 
@@ -122,7 +123,7 @@ console.log(Net)
  * channels.
  * High Byte.
  */
-let channelCount = 6
+let channelCount = 2
 let LengthHi = [channelCount >> 8]
 console.log(LengthHi)
 
@@ -141,12 +142,10 @@ console.log(Length)
  * A variable length array of DMX512 lighting
  * data.
  */
-let Data = [255, 0, 0, 0, 255, 0]
+let Data = [0, 0]
 console.log(Data)
 
-
-function constructArtNetPacket() {
-    return [
+const selfmadeArtNetPacket = [
         ...ID,
         ...OpCode,
         ...ProtVerHi,
@@ -158,95 +157,20 @@ function constructArtNetPacket() {
         ...LengthHi,
         ...Length,
         ...Data
-    ]
-}
+]
+
+console.log(selfmadeArtNetPacket)
 
 
 
 // NOW lets send our packet
 import dgram from 'dgram'
+const socket = dgram.createSocket({type: 'udp4', reuseAddr: true}) 
+socket.bind( 6454, "0.0.0.0", function () { socket.setBroadcast(true) } )
 
-const socket = dgram.createSocket({type: 'udp4', reuseAddr: true})
+const buffer = new Uint8Array(selfmadeArtNetPacket);
 
-var selfmadeArtNetPacket = constructArtNetPacket()
-var buffer = new Uint8Array(selfmadeArtNetPacket);
-console.log(selfmadeArtNetPacket)
-
-socket.bind(6454, "192.168.8.130", function () {
-    socket.setBroadcast(true);
+socket.send(buffer, 0, buffer.length, 6454, "255.255.255.255", function(err) {
+    if (err) { console.log(err) }
+    socket.close()
 });
-
-function sendPacket() {
-    socket.send(buffer, 0, buffer.length, 6454, "255.255.255.255");
-}
-
-function changeData(channel: number, operation: boolean) {
-    if (operation && Data[channel] <= 250) {
-        Data[channel] += 5
-        selfmadeArtNetPacket = constructArtNetPacket()
-        buffer = new Uint8Array(selfmadeArtNetPacket)
-        console.log(`Channel ${channel+1} at ${Data[channel]}`)
-    } else if (!operation && Data[channel] >= 5) {
-        Data[channel] -= 5
-        selfmadeArtNetPacket = constructArtNetPacket()
-        buffer = new Uint8Array(selfmadeArtNetPacket)
-        console.log(`Channel ${channel+1} at ${Data[channel]}`)
-    }
-}
-
-var keypress = require('keypress');
- 
-// make `process.stdin` begin emitting "keypress" events
-keypress(process.stdin);
- 
-// listen for the "keypress" event
-process.stdin.on('keypress', function (ch, key) {
-    //   console.log('got "keypress"', key);
-    if (key && key.ctrl && key.name == 'c') {
-        process.exit(0);
-    } else if (key) {
-        switch (key.name) {
-            case 'q':
-                changeData(0, true)
-                break
-            case 'a':
-                changeData(0, false)
-                break
-            case 'w':
-                changeData(1, true)
-                break
-            case 's':
-                changeData(1, false)
-                break
-            case 'e':
-                changeData(2, true)
-                break
-            case 'd':
-                changeData(2, false)
-                break
-            case 'r':
-                changeData(3, true)
-                break
-            case 'f':
-                changeData(3, false)
-                break
-            case 't':
-                changeData(4, true)
-                break
-            case 'g':
-                changeData(4, false)
-                break
-            case 'z':
-                changeData(5, true)
-                break
-            case 'h':
-                changeData(5, false)
-                break
-        }
-    }
-});
- 
-process.stdin.setRawMode(true);
-process.stdin.resume();
-
-setInterval(sendPacket, 1000/30)
