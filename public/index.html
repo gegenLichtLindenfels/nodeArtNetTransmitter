@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Document</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            touch-action: none;
+        }
+        .wrapper {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            justify-items: center;
+            overflow: hidden;
+        }
+        .fader {
+            display:grid;
+            height: 100vh;
+            width: 1fr;
+            align-items: center;
+            overflow: hidden;
+        }
+        [type=range] {
+            width: 100vh;
+            height: calc(100vw/6);
+            transform: rotate(-90deg);
+        }
+        [type='range'], [type='range']::-webkit-slider-thumb {
+            -webkit-appearance: none;
+        }
+        [type='range']::-webkit-slider-runnable-track {
+            box-sizing: border-box;
+            border: none;
+            width: 12.5em;
+            height: 0.25em;
+            background: #ccc;
+        }
+        [type='range']::-moz-range-track {
+            box-sizing: border-box;
+            border: none;
+            width: 12.5em;
+            height: 0.25em;
+            background: #ccc;
+        }
+        [type='range']::-ms-track {
+            box-sizing: border-box;
+            border: none;
+            width: 12.5em;
+            height: 0.25em;
+            background: #ccc;
+        }
+        [type='range']::-webkit-slider-thumb {
+            margin-top: calc(2px + calc(-100vw/12));
+            box-sizing: border-box;
+            border: none;
+            width: 100px;
+            height: calc(100vw/6);
+            border-radius: 0%;
+            background: #000;
+        }
+        [type='range']::-moz-range-thumb {
+            box-sizing: border-box;
+            border: none;
+            width: 100px;
+            height: calc(100vw/6);
+            border-radius: 0%;
+            background: #000;
+        }
+        [type='range']::-ms-thumb {
+            margin-top: 0;
+            box-sizing: border-box;
+            border: none;
+            width: 100px;
+            height: calc(100vw/6);
+            border-radius: 0%;
+            background: #000;
+        }
+        [type='range']::-ms-tooltip {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="fader">
+            <input style="background-color: red;" type='range' min="0" max="255" value="0" id="range1"/>
+        </div>
+        <div class="fader">
+            <input style="background-color: green;" type='range' min="0" max="255" value="0" id="range2"/>
+        </div>
+        <div class="fader">
+            <input style="background-color: blue;" type='range' min="0" max="255" value="0" id="range3"/>
+        </div>
+        <div class="fader">
+            <input style="background-color: white;" type='range' min="0" max="255" value="0" id="range4"/>
+        </div>
+        <div class="fader">
+            <input style="background-color: orange;" type='range' min="0" max="255" value="0" id="range5"/>
+        </div>
+        <div class="fader">
+            <input style="background-color: orange;" type='range' min="0" max="255" value="0" id="range6"/>
+        </div>
+    </div>
+    
+    <script>
+        let range1 = document.getElementById('range1')
+        let range2 = document.getElementById('range2')
+        let range3 = document.getElementById('range3')
+        let range4 = document.getElementById('range4')
+        let range5 = document.getElementById('range5')
+        let range6 = document.getElementById('range6')
+
+        // use 'change' instead to see the difference in response
+        range1.addEventListener('input', function () {
+        fetch(`/0/${range1.value}`, {method: 'POST'})
+          .then(response => console.log(response))
+        }, false);
+        range2.addEventListener('input', function () {
+        fetch(`/1/${range2.value}`, {method: 'POST'})
+          .then(response => console.log(response))
+        }, false);
+        range3.addEventListener('input', function () {
+        fetch(`/2/${range3.value}`, {method: 'POST'})
+          .then(response => console.log(response))
+        }, false);
+        range4.addEventListener('input', function () {
+        fetch(`/3/${range4.value}`, {method: 'POST'})
+          .then(response => console.log(response))
+        }, false);
+        range5.addEventListener('input', function () {
+        fetch(`/4/${range5.value}`, {method: 'POST'})
+          .then(response => console.log(response))
+        }, false);
+        range6.addEventListener('input', function () {
+        fetch(`/5/${range6.value}`, {method: 'POST'})
+          .then(response => console.log(response))
+        }, false);
+    </script>
+</body>
+</html>

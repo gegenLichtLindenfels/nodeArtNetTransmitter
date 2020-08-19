@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+        }
+        .wrap {
+            display: inline-block;
+            width: 50px;
+            height: calc(100vh - 200px);
+            padding: 0;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            height: 100vh;
+        }
+        .wrap input {
+            width: calc(100vh - 200px);
+            height: 50px;
+            margin: 0;
+            transform-origin: calc(calc(100vh - 200px)/2) calc(calc(100vh - 200px)/2);
+            transform: rotate(-90deg);
+        }   
+    </style>
+</head>
+<body>
+    <div class='grid'>
+        <div class='wrap'>
+            <!-- <input type='range' min="0" max="255" value="0" id="range1"/>
+            <p id="out1"></p> -->
+        </div>
+        <div class='wrap'>
+            <!-- <input type='range' min="0" max="255" value="0" id="range2"/>
+            <p id="out2"></p> -->
+        </div>
+        <div class='wrap'>
+            <!-- <input type='range' min="0" max="255" value="0" id="range3"/>
+            <p id="out3"></p> -->
+        </div>
+        <div class='wrap'>
+            <!-- <input type='range' min="0" max="255" value="0" id="range4"/>
+            <p id="out4"></p> -->
+        </div>
+        <div class='wrap'>
+            <!-- <input type='range' min="0" max="255" value="0" id="range5"/>
+            <p id="out5"></p> -->
+        </div>
+        <div class='wrap'>
+            <!-- <input type='range' min="0" max="255" value="0" id="range6"/>
+            <p id="out6"></p> -->
+        </div>
+    </div>
+    <script>
+
+    </script>
+</body>
+</html>

@@ -194,6 +194,20 @@ function changeData(channel: number, operation: boolean) {
     }
 }
 
+function updateData(data: number[]) {
+    Data = data
+    selfmadeArtNetPacket = constructArtNetPacket()
+    buffer = new Uint8Array(selfmadeArtNetPacket)
+    console.log(`New Data: ${data}`)
+}
+
+function updateChannel(channel: number, value: number) {
+    Data[channel] = value
+    selfmadeArtNetPacket = constructArtNetPacket()
+    buffer = new Uint8Array(selfmadeArtNetPacket)
+    console.log(`Channel ${channel+1} at ${Data[channel]}`)
+}
+
 var keypress = require('keypress');
  
 // make `process.stdin` begin emitting "keypress" events
@@ -248,5 +262,20 @@ process.stdin.on('keypress', function (ch, key) {
  
 process.stdin.setRawMode(true);
 process.stdin.resume();
+
+import express from "express";
+const app = express()
+const port = 3000
+
+app.use(express.static('public'));
+
+app.post('/:channel/:value', (req, res) => {
+    updateChannel(parseInt(req.params.channel), parseInt(req.params.value))
+    return res.send(`Set Channel ${req.params.channel} at ${req.params.value}`);
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
 
 setInterval(sendPacket, 1000/30)
