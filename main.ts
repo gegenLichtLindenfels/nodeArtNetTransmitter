@@ -122,7 +122,7 @@ console.log(Net)
  * channels.
  * High Byte.
  */
-let channelCount = 6
+let channelCount = 512
 let LengthHi = [channelCount >> 8]
 console.log(LengthHi)
 
@@ -141,7 +141,8 @@ console.log(Length)
  * A variable length array of DMX512 lighting
  * data.
  */
-let Data = [255, 0, 0, 0, 255, 0]
+// let Data = [255, 0, 0, 0, 255, 0]
+let Data = new Array(512).fill(0)
 console.log(Data)
 
 
@@ -172,7 +173,7 @@ var selfmadeArtNetPacket = constructArtNetPacket()
 var buffer = new Uint8Array(selfmadeArtNetPacket);
 console.log(selfmadeArtNetPacket)
 
-socket.bind(6454, "192.168.8.130", function () {
+socket.bind(6454, "2.0.0.42", function () {
     socket.setBroadcast(true);
 });
 
